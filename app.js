@@ -1,8 +1,7 @@
-const e = require('express');
 const express = require('express');
 const app = express();
 const sequelize = require('./database/config/db');
-const usuario = require('./database/models/User');
+
 
 
 //Setting
@@ -12,23 +11,20 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
-//Rutas
-app.get('/', (req, res)=>{
-    usuario.create({
-      username: 'hernandw',
-      password: '123456',
-      name: 'Williams',
-      email: 'hernandw@gmail.com',
-      enable: false
-    }).then(user =>{
-      res.json(user)
-    })
-})
+
+
+
+
+//Routes
+const userRoutes = require('./routes/user')
+
 
 
 //levantar servidor
 app.listen(PORT, (req, res) => {
-  console.log(`Servidor Activo on port: ${PORT}`);
+  console.log(`Servidor Activo en port: ${PORT}`);
+
+app.use(userRoutes)
 
   //arrancamos la BBDD
   sequelize
@@ -40,3 +36,6 @@ app.listen(PORT, (req, res) => {
       console.log("Error al conectar la BBDD " + error);
     });
 });
+
+
+module.exports = app;

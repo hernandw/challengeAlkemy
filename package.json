@@ -10,6 +10,7 @@
   "author": "Williams Hernandez",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "pg": "^8.7.1",
