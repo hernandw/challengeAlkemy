@@ -1,4 +1,4 @@
-const Character = require("../../models/Character");
+const Genre = require("../../models/Genre");
 
 
 exports.getPost = (req, res)=>{

@@ -1,4 +1,4 @@
-const Character = require("../../models/Character");
+const Movie = require("../../models/Movie");
 
 
 exports.getPost = (req, res)=>{
