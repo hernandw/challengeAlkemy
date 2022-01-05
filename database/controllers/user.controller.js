@@ -2,12 +2,32 @@ const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const authConfig = require("../../database/config/auth");
+const { user } = require("pg/lib/defaults");
 
-exports.getUsers = async (req, res) => {
+exports.getUser = async (req, res) => {
   try {
-    let user = await User.findAll();
-    res.json({
-      data: user,
+    const { email, password } = req.body;
+    await User.findOne({
+      where: {
+        email: email,
+      },
+    }).then((user) => {
+      if (!user) {
+        res.status(404).json({ msg: "user not found" });
+      } else {
+        if (bcrypt.compareSync(password, user.password)) {
+          //Token de Usuario
+          let token = jwt.sign({ user: user }, authConfig.secret, {
+            expiresIn: authConfig.expires,
+          });
+          res.json({
+            user: user,
+            token: token,
+          });
+        } else {
+          res.status(401).json({ msg: "wrong passwords" });
+        }
+      }
     });
   } catch (error) {
     res.json({
@@ -18,7 +38,10 @@ exports.getUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   //Encriptar la contraseña
-  let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+  let password = bcrypt.hashSync(
+    req.body.password,
+    Number.parseInt(authConfig.rounds)
+  );
   try {
     let newuser = await User.create({
       username: req.body.username,
