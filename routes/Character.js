@@ -8,13 +8,13 @@ const { getCharacters } = require("../database/controllers/character.controller"
 router.get("/characters", getCharacters);
 
 //Ruta para crear Personaje
-router.post("/createcharacter", createCharacter);
+/* router.post("/createcharacter", createCharacter);
 
 //Ruta para Editar Personaje
 router.patch("/createcharacter", editCharacter);
 
 //Ruta para eliminar Personaje
-router.delete('/deletecharacter/:id', deleteCharacter)
+router.delete('/deletecharacter/:id', deleteCharacter) */
 
 
 

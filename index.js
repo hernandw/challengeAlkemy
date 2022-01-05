@@ -2,6 +2,8 @@ const app = require("./app");
 require('./models/associations')
 
 const userRouter = require("./routes/user");
-const postRouter = require("./routes/Character");
+const genreRouter = require("./routes/genre");
 
 
+app.use(userRouter);
+app.use(genreRouter)

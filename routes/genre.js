@@ -5,13 +5,7 @@ const { createGenre } = require("../database/controllers/genre.controller");
 
 
 
-//Ruta para Login
-router.get("/auth/login", getUser);
-
-//Ruta para Registrarse
-router.post("/auth/register", createUser);
-
-
-
+//Ruta para crear Género
+router.post('/creategenre', createGenre);
 
 module.exports = router;

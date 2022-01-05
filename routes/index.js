@@ -1,1 +1,0 @@
-const userRouter = require('../models/User');
