@@ -41,13 +41,13 @@ User.init(
       lowercase: true,
       trim: true,
       validate: {
-        isEmail: {args: true, msg: "checks for email format (foo@bar.com)"}
-      }
+        isEmail: { args: true, msg: "checks for email format (foo@bar.com)" },
+      },
     },
-    enable: {
-      type: DataTypes.BOOLEAN,
+    role: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: 0 //si es 0 es ususrio normal 1 si es administrador
     },
   },
   {

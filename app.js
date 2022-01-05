@@ -19,7 +19,7 @@ app.listen(PORT, (req, res) => {
 
   //arrancamos la BBDD
   sequelize
-    .sync({ force: false })
+    .sync({ force: false }) // true rehace las tablas
     .then(() => {
       console.log("Conexión correcta a la BBDD");
     })
