@@ -5,7 +5,7 @@ const { getUsers, createUser } = require("../database/controllers/user.controlle
 
 
 //Ruta para Login
-router.get("/auth/get", getUsers);
+router.get("/auth/login", getUsers);
 
 
 //Ruta para Registrarse

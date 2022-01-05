@@ -7,7 +7,7 @@ const sequelize = require("./database/config/db");
 const PORT = process.env.PORT || 4000;
 
 //Middleware
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
@@ -15,7 +15,7 @@ app.use(express.json());
 app.listen(PORT, (req, res) => {
   console.log(`Servidor Activo en port: ${PORT}`);
 
-  
+
 
   //arrancamos la BBDD
   sequelize
