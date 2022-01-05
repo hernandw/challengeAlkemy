@@ -5,37 +5,50 @@ class User extends Model {}
 User.init(
   {
     username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        lowercase: true,
-        trim: true,
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: { msg: "username already exists" },
+      lowercase: true,
+      trim: true,
+      validate: {
+        isAlphanumeric: { args: true, msg: "ursername invalid characters" },
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      name: {
-        type: DataTypes.STRING,
-        unique: { msg: "Name already exists" },
-        allowNull: false,
-        lowercase: true,
-        trim: true,
-        validate: {
-          isAlphanumeric: { args: true, msg: "name invalid characters" },
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      lowercase: true,
+      trim: true,
+      validate: {
+        isAlpha: {
+          args: true,
+          msg: "will only allow letters",
         },
       },
-      email: {
-        type: DataTypes.STRING,
-        unique: { msg: "email already exists" },
-        allowNull: false,
-        lowercase: true,
-        trim: true,
+      len: {
+        args: [2, 20],
+        msg: "only allow values with length between 2 and 20",
       },
-      enable: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: { msg: "email already exists" },
+      allowNull: false,
+      lowercase: true,
+      trim: true,
+      validate: {
+        isEmail: {args: true, msg: "checks for email format (foo@bar.com)"}
       }
+    },
+    enable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,

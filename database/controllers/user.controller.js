@@ -45,7 +45,7 @@ exports.createUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "error al guardar los datos",
+      message: "error al guardar los datos " + error,
       data: {},
     });
   }

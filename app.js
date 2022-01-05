@@ -7,7 +7,7 @@ const sequelize = require("./database/config/db");
 const PORT = process.env.PORT || 4000;
 
 //Middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
