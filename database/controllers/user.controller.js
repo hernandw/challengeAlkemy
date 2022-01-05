@@ -2,7 +2,6 @@ const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const authConfig = require("../../database/config/auth");
-const { user } = require("pg/lib/defaults");
 
 exports.getUser = async (req, res) => {
   try {
