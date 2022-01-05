@@ -1,6 +1,7 @@
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const authConfig = require("../../database/config/auth");
 
 exports.getUsers = async (req, res) => {
   try {
@@ -16,14 +17,24 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  let password = bcrypt.hashSync(req.body.password, 10);
+  //Encriptar la contraseña
+  let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
   try {
     let newuser = await User.create({
       username: req.body.username,
-      password: req.body.password,
+      password: password,
       name: req.body.name,
       email: req.body.email,
       enable: req.body.enable,
+    }).then((user) => {
+      //Token de Usuario
+      let token = jwt.sign({ user: user }, authConfig.secret, {
+        expiresIn: authConfig.expires,
+      });
+      res.json({
+        user: user,
+        token: token,
+      });
     });
     if (newuser) {
       return res.json({
