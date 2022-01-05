@@ -1,7 +1,9 @@
 const Character = require("../../models/Character");
 
 
-exports.getPost = (req, res)=>{
-    console.log(req.body)
+exports.getCharacters = (req, res)=>{
+    Character.findAll({
+        attributes: ['name', 'image']
+    })
     res.send('received')
 }

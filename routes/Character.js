@@ -1,11 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const { getPost } = require("../database/controllers/character.controller");
+const { getCharacters } = require("../database/controllers/character.controller");
 
 
 
-//Ruta para Login
-router.get("/auth/login", getPost);
+//Ruta para mostrar personajes
+router.get("/characters", getCharacters);
+
+//Ruta para crear Personaje
+router.post("/createcharacter", createCharacter);
+
+//Ruta para Editar Personaje
+router.patch("/createcharacter", editCharacter);
+
+//Ruta para eliminar Personaje
+router.delete('/deletecharacter/:id', deleteCharacter)
+
 
 
 
