@@ -1,16 +1,14 @@
-const express = require('express');
-const { Router } = require('express');
-const app = require('../app');
+const express = require("express");
 const router = express.Router();
-const { getUsers, createUser } = require('../database/controllers/user.controller') 
-
-//Ruta para Login 
-
-router.get('/auth/get', getUsers);
+const { getUsers, createUser } = require("../database/controllers/user.controller");
 
 
 
-//Ruta para Registrarse 
-router.post('/auth/register', createUser)
+//Ruta para Login
+router.get("/auth/get", getUsers);
 
-module.exports = router
+
+//Ruta para Registrarse
+router.post("/auth/register", createUser);
+
+module.exports = router;

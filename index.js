@@ -1,15 +1,6 @@
-const app = require('./app');
-const { createUser } = require('./database/controllers/user.controller');
-//Setting
-const PORT = process.env.PORT || 3000;
+const app = require("./app");
+
+const userRouter = require("./routes/user.js");
 
 
-
-app.use(userRoutes);
-
-const main = (req, res) => {
-  
-};
-
-
-main();
+app.use(userRouter);

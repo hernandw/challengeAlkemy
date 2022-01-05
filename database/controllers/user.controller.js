@@ -1,4 +1,7 @@
-const User = require('../models/User');
+const User = require('../../models/User');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 
 
 exports.getUsers = async (req, res) => {
@@ -15,14 +18,15 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-  try {
-    const { username, password, name, email, enable } = req.body;
+  let password = bcrypt.hashSync(req.body.password)
+    try {
+    
     let newuser = await User.create({
-      username,
-      password,
-      name,
-      email,
-      enable,
+      username: req.body.username,
+      password: req.body.password,
+      name: req.body.name,
+      email: req.body.email,
+      enable: req.body.enable
     });
     if (newuser) {
      return res.json({
