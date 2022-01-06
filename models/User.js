@@ -47,7 +47,7 @@ User.init(
     role: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0 //si es 0 es ususrio normal 1 si es administrador
+      defaultValue: 0 //si es 0 es usuario normal 1 si es administrador
     },
   },
   {

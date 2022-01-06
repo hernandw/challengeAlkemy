@@ -12,19 +12,16 @@ Movie.init(
     },
     rate: {
       type: DataTypes.INTEGER,
+      validate:{
+        len:{
+          args: [1,5],
+          msg: "only allow values with length between 1 and 5"
+        } 
+      }
     },
     image: {
       type: DataTypes.STRING,
-    },
-    cod_genre: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Genres",
-        key: "id",
-      },
-      onDelete: "Cascade",
-      onUpdate: "Cascade",
-    },
+    }
   },
   {
     timestamps: false,

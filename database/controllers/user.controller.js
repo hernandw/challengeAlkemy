@@ -30,7 +30,7 @@ exports.getUser = async (req, res) => {
     });
   } catch (error) {
     res.json({
-      message: "Error para mostrar los datos",
+      message: "Error para mostrar los datos " + error,
     });
   }
 };
@@ -47,7 +47,7 @@ exports.createUser = async (req, res) => {
       password: password,
       name: req.body.name,
       email: req.body.email,
-      enable: req.body.enable,
+      role: req.body.role,
     }).then((user) => {
       //Token de Usuario
       let token = jwt.sign({ user: user }, authConfig.secret, {
@@ -61,7 +61,7 @@ exports.createUser = async (req, res) => {
     if (newuser) {
       return res.json({
         message: "Usuario creado correctamente",
-        data: newuser,
+        data: newuser
       });
     }
   } catch (error) {
