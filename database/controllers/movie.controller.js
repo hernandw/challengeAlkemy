@@ -2,14 +2,14 @@ const Movie = require("../../models/Movie");
 
 
 exports.createMovie = async (req, res) => {
-  const { title, date, rate, image, cod_genre } = req.body;
+  const { title, date, rate, image, GenreId } = req.body;
   try {
     let newmovie = await Movie.create({
       title,
       date,
       rate,
       image,
-      cod_genre
+      GenreId
     }).then((movie) => {
       res.json(movie);
     });

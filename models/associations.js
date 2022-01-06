@@ -7,5 +7,5 @@ const Genre = require('./Genre');
 Genre.hasMany(Movie);
 Movie.belongsTo(Genre);
 
-/* Movie.belongsToMany(Character, { through: 'CharactersMovies' });
-Character.belongsToMany(Movie, { through: 'CharactersMovies' }); */
+Movie.belongsToMany(Character, { through: 'CharactersMovies' });
+Character.belongsToMany(Movie, { through: 'CharactersMovies' });
