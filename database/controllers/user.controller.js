@@ -1,8 +1,9 @@
 const User = require("../../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken"); // Genera un token al registrarse y loguearse
+const bcrypt = require("bcryptjs"); // Encripta la contraseña
 const authConfig = require("../../database/config/auth");
 
+// Consulta un usuario
 exports.getUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -35,6 +36,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
+// Crea un Usuario
 exports.createUser = async (req, res) => {
   //Encriptar la contraseña
   let password = bcrypt.hashSync(
@@ -61,7 +63,7 @@ exports.createUser = async (req, res) => {
     if (newuser) {
       return res.json({
         message: "Usuario creado correctamente",
-        data: newuser
+        data: newuser,
       });
     }
   } catch (error) {

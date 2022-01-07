@@ -1,10 +1,6 @@
 const res = require("express/lib/response");
 const Character = require("../../models/Character");
 
-
-
-
-
 //Ruta para Consultar Personajes
 exports.getCharacters = async (req, res) => {
   try {
@@ -19,7 +15,6 @@ exports.getCharacters = async (req, res) => {
     });
   }
 };
-
 
 //Ruta para crear Personajes
 exports.createCharacter = async (req, res) => {
@@ -46,29 +41,22 @@ exports.createCharacter = async (req, res) => {
   }
 };
 
-
 //Consultar un solo personaje por Id
 exports.getOnCharacter = async (req, res) => {
   try {
     const { id } = req.params;
     const character = await Character.findOne({
       where: {
-        id
+        id,
       },
     });
     res.json({
-      data: character
+      data: character,
     });
-  /*   if(character.length > 0){
-        res.json({
-            msg: "id no existe"
-        })
-    } */
-    } catch (error) {
+  } catch (error) {
     res.json({
-        msg: "id no existe " + error,
-        
-      });
+      msg: "id no existe " + error,
+    });
   }
 };
 
@@ -97,10 +85,10 @@ exports.updateCharacter = async (req, res) => {
   const { id } = req.params;
   const { name, age, weight, history, image } = req.body;
   let character = await Character.findAll({
-      attributes: ["id", "name", "age", "weight", "history", "image"],
+    attributes: ["id", "name", "age", "weight", "history", "image"],
     where: {
-      id
-    }
+      id,
+    },
   });
   if (character.length > 0) {
     character.forEach(async (c) => {
@@ -109,12 +97,12 @@ exports.updateCharacter = async (req, res) => {
         age,
         weight,
         history,
-        image
+        image,
       });
     });
   }
   return res.json({
     msg: "Personaje Actualizado",
-    data: character
+    data: character,
   });
 };

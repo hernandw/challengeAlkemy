@@ -4,11 +4,10 @@ const Movie = require("./models/Movie");
 const Character = require("./models/Character");
 const Genre = require("./models/Genre");
 require("./models/associations");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 
 
-/* //User
+
+/* //User sin contraseña encriptada
 const users = [
   {
     username: "hernandw",
@@ -142,7 +141,7 @@ sequelize
     console.log("Conexión establecida...");
   })
   /* .then(() => {
-    // Rellenar usuarios
+    // Rellenar usuarios (sin bcrypt)
     users.forEach((user) => User.create(user));
   }) */
   .then(() => {

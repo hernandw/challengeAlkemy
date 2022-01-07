@@ -1,7 +1,5 @@
 const Genre = require("../../models/Genre");
 
-
-
 exports.createGenre = (req, res) => {
   const { name, image } = req.body;
   Genre.create({
