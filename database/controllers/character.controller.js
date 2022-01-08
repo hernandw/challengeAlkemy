@@ -1,5 +1,11 @@
 const res = require("express/lib/response");
 const Character = require("../../models/Character");
+const Movie = require("../../models/Movie");
+const Genre = require("../../models/Genre");
+const { Sequelize } = require('sequelize');
+const {Op} = require('sequelize');
+
+
 
 //Ruta para Consultar Personajes
 exports.getCharacters = async (req, res) => {
@@ -46,13 +52,25 @@ exports.getOnCharacter = async (req, res) => {
   try {
     const { id } = req.params;
     const character = await Character.findOne({
-      where: {
-        id,
+      include: {
+        model: Movie,
+        through: {
+          attributes: []
+        },
+        attributes: ['title']
       },
+      attributes: ["name", "age", "weight", "history", 'image'],
+      where: {
+        id
+      }
     });
-    res.json({
-      data: character,
-    });
+    if (character === null) {
+      res.json({ msg: "id no existe", data: {} });
+    } else {
+      res.json({
+        data: character,
+      });
+    }
   } catch (error) {
     res.json({
       msg: "id no existe " + error,
@@ -105,4 +123,51 @@ exports.updateCharacter = async (req, res) => {
     msg: "Personaje Actualizado",
     data: character,
   });
+};
+
+
+//Ruta para consultar por valor
+exports.getCharacterValor = async (req, res) => {
+  try {
+    //Buscar por edad
+    if (req.query.age) {
+      const respuesta = await Character.findAll({
+        where: {
+          age: req.query.age,
+        },
+      }).then((respuesta) => res.json(respuesta));
+      //Buscar por peso
+    } else if (req.query.weight) {
+      const respuesta = await Character.findAll({
+        where: {
+          weight: req.query.weight,
+        },
+      }).then((respuesta) => res.json(respuesta));
+    } else if (req.query.name) {
+      const respuesta = await Character.findAll({
+        where: {
+          name: { [Op.substring]: req.query.name },
+        },
+      }).then((respuesta) => res.json(respuesta));
+      //Buscar por pelicula
+    } else if(req.query.movies){
+      const respuesta = await Character.findAll({
+        include: [{
+          model: Movie,
+          through: {
+            attributes: []
+          },
+          where: {id: req.query.movies},
+          
+                    attributes: {exclude: 'GenreId'}
+        }]
+      })
+      .then((respuesta) => res.json(respuesta));
+    }
+  } catch (error) {
+    res.status(404).json({
+      msg: "no se encuentra valor",
+      data: {},
+    });
+  }
 };
