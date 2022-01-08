@@ -4,7 +4,12 @@
   "description": "Challege de Node en Alkemy",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest --verbose .routes"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "Williams Hernandez",
@@ -17,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.12.5"
+    "sequelize": "^6.12.5",
+    "@sendgrid/mail": "^7.4.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

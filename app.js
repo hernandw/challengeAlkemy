@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const sequelize = require("./database/config/db");
+const createMail = require('./routes/new')
 
 //Setting
 const PORT = process.env.PORT || 4000;
@@ -8,6 +9,7 @@ const PORT = process.env.PORT || 4000;
 //Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(createMail);
 
 //levantar servidor
 app.listen(PORT, (req, res) => {

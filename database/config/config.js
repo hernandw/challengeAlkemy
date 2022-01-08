@@ -16,6 +16,7 @@ module.exports = {
     database: DB_DATABASE_DEV,
     host: DB_HOST,
     dialect: "postgres",
+    
   },
   test: {
     username: DB_USERNAME,
