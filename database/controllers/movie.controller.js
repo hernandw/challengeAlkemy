@@ -1,5 +1,7 @@
 const Movie = require("../../models/Movie");
 const Character = require("../../models/Character");
+const { Op } = require("sequelize");
+const Genre = require("../../models/Genre");
 
 
 //Busqueda de Peliculas solo por titulo e imagen
@@ -7,7 +9,7 @@ exports.getMovies = async (req, res) => {
   try {
     const peliculas = await Movie.findAll({
       attributes: ["title", "image"],
-    }).then((peliculas) => res.json(peliculas));
+    }).then((peliculas) => res.json(peliculas));    
   } catch (error) {
     res.status(404).json({
       msg: "Error para cargar Peliculas" + error,
@@ -96,3 +98,36 @@ exports.deleteMovie = async (req, res) => {
     });
   }
 }; 
+
+//Buscar Pelicula por titulo o por Género
+exports.getMoviesValor = async (req, res) => {
+  try {
+    //Buscar por titulo
+    if (req.query.title) {
+      const respuesta = await Movie.findAll({
+        where: {
+          title: { [Op.substring]: req.query.title },
+        },
+      }).then((respuesta) => {
+        res.json(respuesta);
+      });
+      //Buscar por Género
+    }else if(req.query.Genre){
+      const respuesta = await Movie.findAll({
+        where:{
+          GenreId:  { [Op.eq]: req.query.Genre }
+        }
+      }).then(respuesta => {
+        res.json(respuesta);
+      })
+      //Buscar por Fecha
+      
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({
+      msg: "Error al buscar " + error,
+      data: {}
+    })
+  }
+};
