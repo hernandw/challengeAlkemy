@@ -2,10 +2,8 @@ const res = require("express/lib/response");
 const Character = require("../../models/Character");
 const Movie = require("../../models/Movie");
 const Genre = require("../../models/Genre");
-const { Sequelize } = require('sequelize');
-const {Op} = require('sequelize');
-
-
+const { Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
 
 //Ruta para Consultar Personajes
 exports.getCharacters = async (req, res) => {
@@ -55,14 +53,14 @@ exports.getOnCharacter = async (req, res) => {
       include: {
         model: Movie,
         through: {
-          attributes: []
+          attributes: [],
         },
-        attributes: ['title']
+        attributes: ["title"],
       },
-      attributes: ["name", "age", "weight", "history", 'image'],
+      attributes: ["name", "age", "weight", "history", "image"],
       where: {
-        id
-      }
+        id,
+      },
     });
     if (character === null) {
       res.json({ msg: "id no existe", data: {} });
@@ -125,7 +123,6 @@ exports.updateCharacter = async (req, res) => {
   });
 };
 
-
 //Ruta para consultar por valor
 exports.getCharacterValor = async (req, res) => {
   try {
@@ -150,19 +147,20 @@ exports.getCharacterValor = async (req, res) => {
         },
       }).then((respuesta) => res.json(respuesta));
       //Buscar por pelicula
-    } else if(req.query.movies){
+    } else if (req.query.movies) {
       const respuesta = await Character.findAll({
-        include: [{
-          model: Movie,
-          through: {
-            attributes: []
+        include: [
+          {
+            model: Movie,
+            through: {
+              attributes: [],
+            },
+            where: { id: req.query.movies },
+
+            attributes: { exclude: "GenreId" },
           },
-          where: {id: req.query.movies},
-          
-                    attributes: {exclude: 'GenreId'}
-        }]
-      })
-      .then((respuesta) => res.json(respuesta));
+        ],
+      }).then((respuesta) => res.json(respuesta));
     }
   } catch (error) {
     res.status(404).json({

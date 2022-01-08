@@ -1,24 +1,98 @@
 const Movie = require("../../models/Movie");
+const Character = require("../../models/Character");
 
-exports.createMovie = async (req, res) => {
-  const { title, date, rate, image, GenreId } = req.body;
+
+//Busqueda de Peliculas solo por titulo e imagen
+exports.getMovies = async (req, res) => {
   try {
-    let newmovie = await Movie.create({
-      title,
-      date,
-      rate,
-      image,
-      GenreId,
-    }).then((movie) => {
-      res.json(movie);
-    });
-    if (movie) {
-      res.json({ msg: "pelicula creada correctamente", data: newmovie });
-    }
+    const peliculas = await Movie.findAll({
+      attributes: ["title", "image"],
+    }).then((peliculas) => res.json(peliculas));
   } catch (error) {
-    res.status(500).json({
-      msg: "Error al guardar pelicula",
+    res.status(404).json({
+      msg: "Error para cargar Peliculas" + error,
       data: {},
     });
   }
 };
+
+//Detalles de Peliculas
+exports.getMoviesDetails = async (req, res) => {
+  const detallePelicula = await Movie.findOne({
+    include: {
+      model: Character,
+      through: {
+        attributes: []
+      },
+      attributes: ["name"],
+    },
+    where: {
+      id: req.params.id,
+    },
+    attributes: {exclude: 'GenreId'}
+  }).then((detallePelicula) => {
+    res.json(detallePelicula);
+  });
+};
+
+
+//Registrar una pelicula
+exports.createMovie = async (req, res) => {
+  try {
+    const newMovie = await Movie.create({
+      title: req.body.title,
+      date: req.body.date,
+      rate: req.body.rate,
+      image: req.body.image,
+      GenreId: req.body.GenreId
+    }).then(newMovie=> {
+      res.json({
+        msg: "se ha creado la pelicula correctamente",
+        data: newMovie
+      })
+    })
+  } catch (error) {
+    res.status(404).json({
+      msg: "error al guardar pelicula " + error,
+      data: {}
+    })
+  }
+};
+
+//Actualizar una pelicula
+exports.editMovie = async (req, res) => {
+  const { title, date, rate, image, GenreId } = req.body;
+  await Movie.update({
+    title,
+    date,
+    rate,
+    image,
+    GenreId
+  },{
+    where: {
+      id: req.params.id
+    }
+  }
+  ).then(result =>{
+    res.json(result)
+  })
+}
+
+//Borrar una pelicula
+exports.deleteMovie = async (req, res) => {
+  try {
+    const pelicula = await Movie.destroy({
+      where: {
+        id: req.params.id
+      },
+    }).then((pelicula) => {
+      res.json(pelicula);
+    });
+  } catch (error) {
+    console.log(error)
+    res.json({
+      msg: "error para eliminar " + error,
+      data: pelicula,
+    });
+  }
+}; 
