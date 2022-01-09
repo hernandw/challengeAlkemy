@@ -1,24 +1,35 @@
 const express = require("express");
+const app = express();
 const router = express.Router();
-const sgMail = require('../services/sendgrid')
+const sgMail = require("../services/sendgrid");
+
+//midlewares
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
+
 
 router.post("/api/mail", async (req, res) => {
   const { to, subject, text, html } = req.body;
 
-
   const msg = {
-    to,
+    to: 'hernandw@gmail.com',
     from: "hernandw@gmail.com",
-    subject,
-    text,
-    html,
+    subject: 'hola',
+    text: 'hola',
+    html: '<p>hola</p>'
   };
 
-  try {
-      await sgMail.send(msg);
-  } catch (error) {
-      return res.status(error.code).send(error.message)
-  }
+  
 
-  res.send(201).send({ success: true });
+  try {
+    await sgMail.send(msg);
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      console.error(error.response.body)
+    }
+  }
 });
