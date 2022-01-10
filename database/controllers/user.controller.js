@@ -60,7 +60,7 @@ exports.createUser = async (req, res) => {
       }); */
       //Enviar correo
       const msg = {
-        to: "hernandw@gmail.com",
+        to: req.body.email,
         from: "hernandw@gmail.com",
         subject: "Registro creado Exitosamente",
         text: "muchas gracias por registrarte",
