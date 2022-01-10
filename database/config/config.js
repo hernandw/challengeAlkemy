@@ -7,6 +7,7 @@ const {
   DB_DATABASE_DEV,
   DB_DATABASE_TEST,
   DB_DATABASE_PROD,
+  SENDGRID_API_KEY
 } = process.env;
 
 module.exports = {
@@ -16,6 +17,7 @@ module.exports = {
     database: DB_DATABASE_DEV,
     host: DB_HOST,
     dialect: "postgres",
+    SENDGRID_API_KEY: SENDGRID_API_KEY
     
   },
   test: {
